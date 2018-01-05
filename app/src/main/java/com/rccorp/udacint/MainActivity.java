@@ -72,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Rolodata> call, Response<Rolodata> response) {
 
-                    String firstName=response.body().getFirstName();
-                    String lastName=response.body().getLastname();
-                    String avatar=response.body().getAvatar();
-                    fname.add(firstName);
-                    lname.add(lastName);
-                    avalist.add(avatar);
+//                    String firstName=response.body().getFirstName();
+//                    String lastName=response.body().getLastname();
+//                    String avatar=response.body().getAvatar();
+//                    fname.add(firstName);
+//                    lname.add(lastName);
+//                    avalist.add(avatar);
                     Log.e("Success", "getData: onResponse " + response.message());
                 }
 
