@@ -32,24 +32,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainView = (ViewPager) findViewById(R.id.mainViewPager);
-
         getCardData();
 
-        fname.add("Sumit");
-        lname.add("birud");
-        fname.add("Rutwik");
-        lname.add("Chinchole");
-        avalist.add("https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png");
-        avalist.add("https://t4.ftcdn.net/jpg/00/78/73/53/240_F_78735333_o3qJe4bT5ciwldLIjVDulFKrDAV3jGYO.jpg");
+        mainView = (ViewPager) findViewById(R.id.mainViewPager);
 
-
-        mCardAdapter=new CardAdapter();
-        for (int i=0;i<fname.size();i++){
-            mCardAdapter.addCardItem(new Roloitem(fname.get(i),lname.get(i),avalist.get(i)));
-        }
-
-        mainView.setAdapter(mCardAdapter);
 
     }
 
@@ -66,26 +52,39 @@ public class MainActivity extends AppCompatActivity {
 
             Api api = adapter.create(Api.class);
 
-            Call<Rolodata> call = api.getData();
+            Call<List<Rolodata>> call = api.getData();
 
-            call.enqueue(new Callback<Rolodata>() {
+            call.enqueue(new Callback<List<Rolodata>>() {
                 @Override
-                public void onResponse(Call<Rolodata> call, Response<Rolodata> response) {
+                public void onResponse(Call<List<Rolodata>> call, Response<List<Rolodata>> response) {
+                    for (int i=0;i<response.body().size();i++){
+                        String firstName=response.body().get(i).getFirstName();
+                        String lastName=response.body().get(i).getLastname();
+                        String avatar=response.body().get(i).getAvatar();
+                        fname.add(firstName);
+                        lname.add(lastName);
+                        avalist.add(avatar);
+                    }
 
-//                    String firstName=response.body().getFirstName();
-//                    String lastName=response.body().getLastname();
-//                    String avatar=response.body().getAvatar();
-//                    fname.add(firstName);
-//                    lname.add(lastName);
-//                    avalist.add(avatar);
-                    Log.e("Success", "getData: onResponse " + response.message());
+                    mCardAdapter=new CardAdapter();
+                    for (int i=0;i<fname.size();i++){
+                        mCardAdapter.addCardItem(new Roloitem(fname.get(i),lname.get(i),avalist.get(i)));
+                    }
+
+                    mainView.setAdapter(mCardAdapter);
+
+
+                    Log.e("Success", "getData: onResponse " + response.body());
                 }
 
                 @Override
-                public void onFailure(Call<Rolodata> call, Throwable t) {
+                public void onFailure(Call<List<Rolodata>> call, Throwable t) {
                     Log.e("Failure", "getData: onResponse ");
+
                 }
             });
+
+
 
     }
 

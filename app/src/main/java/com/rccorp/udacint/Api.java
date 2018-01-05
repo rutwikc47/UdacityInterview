@@ -1,5 +1,7 @@
 package com.rccorp.udacint;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -10,7 +12,7 @@ import retrofit2.http.Headers;
 
 public interface Api {
 
-    @GET("udacity-mobile-interview/CardData")
-    Call<Rolodata> getData();
+    @GET("udacity-mobile-interview/CardData.json")
+    Call<List<Rolodata>> getData();
 
 }
